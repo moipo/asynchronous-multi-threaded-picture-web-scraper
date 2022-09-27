@@ -2,6 +2,7 @@
 
 import requests
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 
 
 
@@ -23,7 +24,7 @@ class Parser2:
 
     def parse_pages_in_range(self, start_page, last_page ):
         if start_page <= 0: start_page = 1
-        for i in range(start_page,last_page):
+        for i in tqdm(range(start_page,last_page)):
             self.parse_one_page(f"https://nicefon.ru/nav/page-{i}.html")
 
 

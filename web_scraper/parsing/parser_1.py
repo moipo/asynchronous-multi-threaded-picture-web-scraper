@@ -2,7 +2,7 @@
 
 import requests
 from bs4 import BeautifulSoup
-
+from tqdm import tqdm
 
 class Parser1:
 
@@ -34,7 +34,5 @@ class Parser1:
         return res
 
     def parse_pages_in_range(self, start_page, last_page):
-        for link in self.__generate_links_in_range(start_page, last_page):
+        for link in tqdm(self.__generate_links_in_range(start_page, last_page)):
             self.parse_one_page(link)
-
-print("выполняет ли модуль когда мы его импортируем?")
