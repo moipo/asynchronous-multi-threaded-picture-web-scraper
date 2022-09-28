@@ -1,8 +1,6 @@
 from parsing.mtpws import start
 
 
-class InputError(Exception):
-    pass
 
 
 def validate(img_qua:str):
@@ -11,5 +9,4 @@ def validate(img_qua:str):
 
 inp = input("Input the amount of pictures you'd like to download: ")
 validate(inp)
-img_qua = int(inp)
-start(img_qua)
+start(int(inp))
