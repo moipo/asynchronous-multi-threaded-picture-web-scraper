@@ -2,20 +2,22 @@
 
 import requests
 from bs4 import BeautifulSoup
-from tqdm import tqdm
+
 
 class Parser1:
 
     def __init__(self):
         self.cnt = 0
 
-    def parse_one_page(self,page_link):
+    def parse_one_page(self,page_link,quantity):
         response = requests.get(page_link)
         soup = BeautifulSoup(response.text, "html.parser")
         soup = soup.findAll('div' , id = "tmbox")
         for tmbox in soup:
             if tmbox.img is not None:
                 self.cnt += 1
+                quantity["img_qua"] -= 1
+                if quantity["img_qua"] <= 0: exit()
                 download_it = "https:" + str(tmbox.img.get('src'))
                 img_content = requests.get(download_it)
                 with open(f"pictures/7fon_img_{self.cnt}.png", "wb" ) as picture:
@@ -33,6 +35,8 @@ class Parser1:
             res.append(current_link)
         return res
 
-    def parse_pages_in_range(self, start_page, last_page):
-        for link in tqdm(self.__generate_links_in_range(start_page, last_page)):
-            self.parse_one_page(link)
+
+    def parse_pages_in_range(self, start_page, last_page, quantity):
+        for link in self.__generate_links_in_range(start_page, last_page):
+            self.parse_one_page(link,quantity)
+            print("images left to download: ", quantity["img_qua"])
