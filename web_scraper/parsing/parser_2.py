@@ -2,7 +2,8 @@
 
 import requests
 from bs4 import BeautifulSoup
-from tqdm import tqdm
+
+
 
 
 
@@ -28,7 +29,8 @@ class Parser2:
         if start_page <= 0: start_page = 1
         for i in range(start_page,last_page):
             self.parse_one_page(f"https://nicefon.ru/nav/page-{i}.html", quantity)
-            print(quantity["img_qua"])
+            print("images left to download: ", quantity["img_qua"])
+
 
 
 

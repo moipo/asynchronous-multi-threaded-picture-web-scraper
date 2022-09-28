@@ -2,7 +2,7 @@
 
 import requests
 from bs4 import BeautifulSoup
-from tqdm import tqdm
+
 
 class Parser1:
 
@@ -39,4 +39,4 @@ class Parser1:
     def parse_pages_in_range(self, start_page, last_page, quantity):
         for link in self.__generate_links_in_range(start_page, last_page):
             self.parse_one_page(link,quantity)
-            print(quantity["img_qua"])
+            print("images left to download: ", quantity["img_qua"])
