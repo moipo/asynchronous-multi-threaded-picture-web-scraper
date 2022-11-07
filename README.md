@@ -1,5 +1,5 @@
 # multi-threaded-picture-web-scraper
-Simultaneously parses pictures from several different sites.
+This application allows you to parse pictures from several different sites simultaneously.
 
 Make sure you activated your virtual environment and downloaded all the necessary requirements from requirements.txt
 Start by launching main.py and then specify the amount of images that you need to download.
