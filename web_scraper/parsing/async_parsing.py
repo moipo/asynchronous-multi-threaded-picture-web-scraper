@@ -13,12 +13,14 @@ async def fetch_content(url, session):
         data = await response.read()
         write_image(data)
 
-async def async_parsing():
+async def async_parsing(quantity):
     url = "https://loremflickr.com/320/240"
     tasks = []
 
     async with aiohttp.ClientSession() as session:
-        for i in range(20):
+        while quantity["thread_1"] > 0:
             task = asyncio.create_task(fetch_content(url, session))
             tasks.append(task)
+            quantity["thread_1"]-=1
+
         await asyncio.gather(*tasks)

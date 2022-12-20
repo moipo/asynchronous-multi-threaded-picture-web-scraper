@@ -1,24 +1,20 @@
-from .parser_1 import Parser1
-from .parser_2 import parse2
 import asyncio
-from .async_parsing import async_parsing
 from threading import *
-
 import pathlib
 import shutil
-
 import os
 import subprocess, sys
 
-def start(img_qua):
+from .parsing import Parser
+from .async_parsing import async_parsing
+
+def start(total_img_amount):
 
     pictures_path = os.path.join(pathlib.Path(__file__).parent.parent.resolve(), "pictures")
 
     if os.path.isdir(pictures_path):
         shutil.rmtree(pictures_path)
-        os.mkdir(pictures_path)
-    else: os.mkdir(pictures_path)
-
+    os.mkdir(pictures_path)
 
     try:
         os.startfile(pictures_path)
@@ -26,17 +22,18 @@ def start(img_qua):
         opener = "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, pictures_path])
 
+    thread_1_img_amount = (total_img_amount*3)//4
+    thread_2_img_amount = total_img_amount - thread_1_img_amount
 
-    asyncio.run(async_parsing())
-    img_qua-=20
+    quantity = {
+    "thread_1" : thread_1_img_amount,
+    "thread_2" : thread_2_img_amount,
+    }
 
-    p1 = Parser1()
+    prsr = Parser()
 
-    quantity = {"img_qua" : img_qua}
-
-    t1 = Thread(target=p1.parse_pages_in_range,args = (1,1000,quantity))
-    t2 = Thread(target=parse2,args = (dict(quantity),))
-
+    t1 = Thread(target=asyncio.run,args = (async_parsing(quantity),))
+    t2 = Thread(target=prsr.parse_pages_in_range,args = (1,1000,quantity))
 
     t1.start()
     t2.start()

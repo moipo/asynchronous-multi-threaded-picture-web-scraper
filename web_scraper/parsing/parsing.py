@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class Parser1:
+class Parser:
 
     def __init__(self):
         self.cnt = 0
@@ -16,8 +16,8 @@ class Parser1:
         for tmbox in soup:
             if tmbox.img is not None:
                 self.cnt += 1
-                quantity["img_qua"] -= 1
-                if quantity["img_qua"] <= 0: exit()
+                quantity["thread_2"] -= 1
+                if quantity["thread_2"] <= 0: exit()
                 download_it = "https:" + str(tmbox.img.get('src'))
                 img_content = requests.get(download_it)
                 with open(f"pictures/7fon_img_{self.cnt}.png", "wb" ) as picture:
@@ -39,4 +39,4 @@ class Parser1:
     def parse_pages_in_range(self, start_page, last_page, quantity):
         for link in self.__generate_links_in_range(start_page, last_page):
             self.parse_one_page(link,quantity)
-            print("images left to download: ", quantity["img_qua"])
+            print("images left to download: ", quantity["thread_2"])
